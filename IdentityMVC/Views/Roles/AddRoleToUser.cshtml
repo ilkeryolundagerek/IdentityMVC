@@ -1,0 +1,43 @@
+﻿@using IdentityMVC.Data;
+@model Tuple<IQueryable<AppUser>, IQueryable<AppRole>>
+
+@{
+    ViewData["Title"] = "AddRoleToUser";
+}
+
+<h1>AddRoleToUser</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Firstname</th>
+            <th>Lastname</th>
+            <th>UserName</th>
+            <th>Select Role</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Item1)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Firstname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Lastname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    <form asp-action="AddRoleToUser" asp-controller="Roles" method="post">
+                        <input type="hidden" name="selected_userid" value="@item.Id" />
+                        <select name="selected_role" onchange="this.form.submit()" asp-items="@Model.Item2.Select(x=>new SelectListItem(){Value=x.Name, Text=x.Name})">
+                            <option>Select a role</option>
+                        </select>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
