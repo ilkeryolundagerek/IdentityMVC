@@ -1,8 +1,13 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    var items = new string[] { "ilker turan", "bilgisayar öğretmeni","istanbul maltepe","@idealtepe 9--9 !27" };
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <mail-to address="ilkerturan@outlook.com" />
+    <img-sqr image="https://picsum.photos/450/850" size="50" />
+    <img src="https://picsum.photos/450/850" custom-size="150" />
+    <ol custom-items="@items"></ol>
 </div>
