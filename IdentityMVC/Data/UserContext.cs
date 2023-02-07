@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using IdentityMVC.Models;
 
 namespace IdentityMVC.Data
 {
@@ -8,5 +9,6 @@ namespace IdentityMVC.Data
         public UserContext(DbContextOptions options) : base(options)
         {
         }
+        public DbSet<IdentityMVC.Models.Employee> Employee { get; set; }
     }
 }

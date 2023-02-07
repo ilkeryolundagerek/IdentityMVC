@@ -1,5 +1,6 @@
 using IdentityMVC.Data;
 using IdentityMVC.Models;
+using IdentityMVC.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
@@ -32,6 +33,8 @@ builder.Services.ConfigureApplicationCookie(o =>
     o.LogoutPath=new PathString("/identity/account/logout");
     o.AccessDeniedPath=new PathString("/identity/account/accessdenied");
 });
+
+builder.Services.AddTransient<IUploadService, UploadService>();
 
 var app = builder.Build();
 

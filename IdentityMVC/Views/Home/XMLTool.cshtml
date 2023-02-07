@@ -1,0 +1,10 @@
+﻿@{
+    ViewData["Title"] = "XMLTool";
+}
+
+<h1>XMLTool</h1>
+<form asp-action="XMLResult" asp-controller="Home" asp-area="" method="post" enctype="multipart/form-data">
+    @Html.AntiForgeryToken()
+    <input name="xmldata" id="xmldata" type="file" />
+    <button type="submit">Upload</button>
+</form>
