@@ -1,4 +1,5 @@
 ﻿using IdentityMVC.Models;
+using IdentityMVC.Toolbox.Attributes;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -16,6 +17,7 @@ namespace IdentityMVC.Controllers
 
         public IActionResult Index()
         {
+
             return View();
         }
 

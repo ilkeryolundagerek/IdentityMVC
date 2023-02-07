@@ -1,6 +1,10 @@
 ﻿using IdentityMVC.Toolbox.Extensions;
 using Microsoft.AspNetCore.Html;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Razor.TagHelpers;
+using System;
+using System.Security.Policy;
+using System.Text.Encodings.Web;
 
 namespace IdentityMVC
 {
@@ -53,17 +57,48 @@ namespace IdentityMVC
         }
     }
 
+    [HtmlTargetElement("url")]
+    public class UrlTagHelper : TagHelper
+    {
+        public string Text { get; set; }
 
+        public override void Process(TagHelperContext context, TagHelperOutput output)
+        {
+            output.TagName="a";
+            output.TagMode=TagMode.StartTagAndEndTag;
+            output.Attributes.Add("href", $"{Text.ToUrl()}");
+            output.Content.SetContent(Text);
+        }
+    }
 
     [HtmlTargetElement("ol")]
     public class CustomOL : TagHelper
     {
         public IEnumerable<string> CustomItems { get; set; }
-        public override void Process(TagHelperContext context, TagHelperOutput output)
+
+        public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
         {
+
             foreach (var item in CustomItems)
             {
-                output.Content.AppendHtml($"<li>{item.ToUrl()}</li>");
+                //url etiketini oluşturuyor fakat taghelper onu render etmiyor.
+                var url = new TagBuilder("url");
+                url.Attributes.Add("text", item);
+                var li = new TagBuilder("li");
+                li.InnerHtml.SetHtmlContent(url);
+                output.Content.AppendHtml(li);
+            }
+        }
+    }
+
+    public static class Tool
+    {
+        public static string TagToString(IHtmlContent tag)
+        {
+            using (var w = new StringWriter())
+            {
+                tag.WriteTo(w, HtmlEncoder.Default);
+                return w.ToString();
             }
         }
     }

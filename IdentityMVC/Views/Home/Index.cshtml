@@ -1,6 +1,9 @@
-﻿@{
+﻿@using IdentityMVC.Toolbox.Attributes;
+@{
     ViewData["Title"] = "Home Page";
     var items = new string[] { "ilker turan", "bilgisayar öğretmeni","istanbul maltepe","@idealtepe 9--9 !27" };
+    var simple = new MySimple();
+    //simple.SetName("ilker");
 }
 
 <div class="text-center">
@@ -10,4 +13,6 @@
     <img-sqr image="https://picsum.photos/450/850" size="50" />
     <img src="https://picsum.photos/450/850" custom-size="150" />
     <ol custom-items="@items"></ol>
+    <url text="İlker Turan Öğretmen" />
+    <h1>@simple.Name</h1>
 </div>
