@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Xml;
+using System.Xml.Serialization;
 
 namespace IdentityMVC.Controllers
 {
@@ -44,18 +45,16 @@ namespace IdentityMVC.Controllers
             string file_path = await _upload.UploadFile(xmldata);
             if (!string.IsNullOrEmpty(file_path))
             {
-                string path = Path.Combine(_environment.WebRootPath,"uploads", file_path);
-                List<Employee> data = new List<Employee>();
+                string path = Path.Combine(_environment.WebRootPath, "uploads", file_path);
+                EmployeesViewModel data;
+                XmlRootAttribute xroot = new XmlRootAttribute();
+                xroot.ElementName="employees";
+                xroot.IsNullable=true;
+                XmlSerializer serializer = new XmlSerializer(typeof(EmployeesViewModel), xroot);
+
                 using (var reader = XmlReader.Create(path))
                 {
-                    while (reader.Read())
-                    {
-                        if (reader.IsStartElement())
-                        {
-                            var name = reader.Name.ToString();
-                            //var value = reader.ReadContentAsString();
-                        }
-                    }
+                    data = (EmployeesViewModel)serializer.Deserialize(reader);
                 }
                 //string str_data = System.IO.File.ReadAllText(path);
                 //XMLParserService<EmployeesViewModel> parser = new XMLParserService<EmployeesViewModel>();
